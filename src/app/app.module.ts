@@ -12,11 +12,18 @@ import {RepoBrowserComponent} from './github/repo-browser/repo-browser.component
 import {RepoListComponent} from './github/repo-list/repo-list.component';
 import {RepoDetailComponent} from './github/repo-detail/repo-detail.component';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {TestForm} from "./form/form.component"
+import {FormService} from './services/form.service';
+import {DatepickerModule, TimepickerModule, ButtonsModule} from 'ng2-bootstrap/ng2-bootstrap';
 
 @NgModule({
-  declarations: [AppComponent, AboutComponent, RepoBrowserComponent, RepoListComponent, RepoDetailComponent, HomeComponent],
-  imports     : [BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig)],
-  providers   : [GithubService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
+  declarations: [AppComponent, AboutComponent, RepoBrowserComponent, RepoListComponent, RepoDetailComponent, HomeComponent, TestForm],
+  imports     : [DatepickerModule, TimepickerModule, ButtonsModule, BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(rootRouterConfig)],
+  providers   : [
+    FormService,
+    GithubService, 
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
+  ],
   bootstrap   : [AppComponent]
 })
 export class AppModule {

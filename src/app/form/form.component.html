@@ -1,0 +1,73 @@
+<div class="container">
+<h3>Form Validation</h3>
+  <form #form="ngForm" novalidate (submit)="submitForm(form, $event)">
+    <div class="form-group has-feedback" 
+      [class.has-success]="(firstName.dirty || firstName.touched) && firstName.valid"
+      [class.has-error]="(firstName.dirty || firstName.touched) && firstName.invalid">
+      <label class="control-label">First Name:</label>
+      <input  type="text" class="form-control" pattern="...+" 
+              name="firstName" #firstName="ngModel" 
+              [ngModel]="model.firstName"
+              (ngModelChange)="firstNameToUpper($event)" required >
+      <span 
+        *ngIf="(firstName.dirty || firstName.touched) && firstName.valid"
+        class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+      <span 
+        *ngIf="(firstName.dirty || firstName.touched) && firstName.invalid"
+        class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+      <div></div>
+    </div>
+    <div class="form-group">
+      <label>Last Name:</label>
+      <input type="text" class="form-control" required
+      name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel">
+    </div>
+    <div class="form-group">      
+      <label>Full Time Employee:</label>
+      <button class="btn" [class.btn-primary]="model.isFullTime === 'Yes'" name="isFullTime"
+        type="button" btnCheckbox btnCheckboxTrue="Yes" btnCheckboxFalse="No"
+        [(ngModel)]="model.isFullTime">{{model.isFullTime}}</button>
+    </div>
+
+    <label>Payment Type:</label>  
+    <div class="btn-group">
+      <label name="paymentType" class="btn" [class.btn-primary]="model.paymentType === 'W2'"
+        btnRadio="W2" [(ngModel)]="model.paymentType">
+        W2
+      </label>
+      <label name="paymentType" class="btn" [class.btn-primary]="model.paymentType === '1099'"
+        btnRadio="1099" [(ngModel)]="model.paymentType">
+        1099
+      </label>
+    </div>
+
+    <div class="form-group" [class.has-error]="languageInvalid && (language.touched || language.dirty)">
+      <label class="control-label">Language:</label>
+      <select class="form-control" name="language" #language="ngModel"
+        [(ngModel)]="model.language">
+        <option value="default">Select a Language</option>
+        <option *ngFor="let lang of languages">
+          {{lang}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Date Hired:</label>
+      <datepicker name="dateHired" [showWeeks]="false"
+      [onlyCurrentMonth]="true" 
+      [datepickerMode]="'month'"
+      [(ngModel)]="model.dateHired" ></datepicker>
+    </div>
+
+    <div class="form-group">
+      <label>Time Entered:</label>
+      <timepicker name="timeEntered" 
+      [(ngModel)]="model.timeEntered" ></timepicker>
+    </div>
+    <button [disabled]="form.invalid" type="submit" class="btn btn-primary">Ok</button>
+  </form>
+</div>
+{{model | json}}
+<br>
+{{form.value | json }}
